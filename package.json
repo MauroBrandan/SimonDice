@@ -1,0 +1,15 @@
+{
+  "name": "simon-dice",
+  "version": "1.0.0",
+  "description": "Juego de Simon Dice en el que se aplican conocimientos fundamentales de JavaScript.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "javascript",
+    "juego"
+  ],
+  "author": "Mauro Brandan <maurobrandan.mb@gmail.com>",
+  "license": "MIT"
+}
