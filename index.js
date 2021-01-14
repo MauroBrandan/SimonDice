@@ -3,10 +3,11 @@ const violeta = document.getElementById('violeta')
 const naranja = document.getElementById('naranja')
 const verde = document.getElementById('verde')
 const btnEmpezar = document.getElementById('btnEmpezar')
-const ULTIMO_NIVEL = 5
+const ULTIMO_NIVEL = 10
 
 class Juego{
     constructor(){
+        this.inicializar = this.inicializar.bind(this)
         this.inicializar()
         this.generarSecuencia()
         setTimeout(this.siguienteNivel, 500)
@@ -15,13 +16,21 @@ class Juego{
     inicializar(){
         this.elegirColor = this.elegirColor.bind(this)
         this.siguienteNivel = this.siguienteNivel.bind(this)
-        btnEmpezar.classList.add('hide')
+        this.toogleBtnEmpezar()
         this.nivel = 1
         this.colores = {
             celeste,
             violeta,
             naranja,
             verde
+        }
+    }
+
+    toogleBtnEmpezar(){
+        if(btnEmpezar.classList.contains('hide')){
+            btnEmpezar.classList.remove('hide')
+        }else {
+            btnEmpezar.classList.add('hide')
         }
     }
 
@@ -74,14 +83,14 @@ class Juego{
         if (numeroColor === this.secuencia[this.subNivel]){
             this.subNivel++
         }else{
-            //perdio
+            this.perdioElJuego()
         }
 
         if(this.subNivel === this.nivel){
             this.nivel++
             this.eliminarEventosClick()
             if(this.nivel > ULTIMO_NIVEL){
-                //Gano
+                this.ganoElJuego()
             }else{
                 setTimeout(this.siguienteNivel, 1500)
             }
@@ -106,6 +115,19 @@ class Juego{
         this.colores.violeta.removeEventListener('click', this.elegirColor)
         this.colores.naranja.removeEventListener('click', this.elegirColor)
         this.colores.verde.removeEventListener('click', this.elegirColor)
+    }
+
+    perdioElJuego(){
+        swal('Simon Dice', 'Ese no era, perdiste :(', 'error')
+            .then(() => {
+                this.eliminarEventosClick()
+                this.inicializar()
+            })
+    }
+
+    ganoElJuego(){
+        swal('Simon Dice', 'Muy bien, ganaste!!', 'success')
+            .then(this.inicializar)
     }
 }
 
