@@ -3,6 +3,7 @@ const violeta = document.getElementById('violeta')
 const naranja = document.getElementById('naranja')
 const verde = document.getElementById('verde')
 const btnEmpezar = document.getElementById('btnEmpezar')
+const score = document.getElementById('score')
 const ULTIMO_NIVEL = 10
 
 class Juego{
@@ -42,6 +43,7 @@ class Juego{
         this.subNivel = 0
         this.iluminarSecuencia()
         this.agregarEventosClick()
+        score.innerHTML = this.nivel
     }
 
     iluminarSecuencia(){
