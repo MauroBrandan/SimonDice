@@ -5,6 +5,10 @@ const verde = document.getElementById('verde')
 const btnEmpezar = document.getElementById('btnEmpezar')
 const score = document.getElementById('score')
 const ULTIMO_NIVEL = 10
+const soundClick = new Audio('http://www.science.smith.edu/dftwiki/images/4/4e/Sonar.wav')
+const soundLevel = new Audio('http://plantsvszombies.clan.su/publfiles/downloads/soundspvz/points.mp3')
+const soundWin = new Audio('http://starmen.net/mother1/music/08%20-%20MOTHER%20-%20You%20Won.mp3')
+const soundLose = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-arcade-retro-game-over-213.mp3')
 
 class Juego{
     constructor(){
@@ -43,13 +47,15 @@ class Juego{
         this.subNivel = 0
         this.iluminarSecuencia()
         this.agregarEventosClick()
-        score.innerHTML = this.nivel
     }
 
     iluminarSecuencia(){
         for (let i = 0; i < this.nivel; i++){
             const color = this.transformarNumeroAColor(this.secuencia[i])
-            setTimeout(() => this.iluminarColor(color), 1000 * i)
+            setTimeout(() => {
+                this.iluminarColor(color)
+                soundClick.play()
+            }, 1000 * i)
         }
     }
 
@@ -79,6 +85,7 @@ class Juego{
     }
 
     elegirColor(evento){
+        soundClick.play()
         const nombreColor = evento.target.dataset.color
         const numeroColor = this.transformarColorANumero(nombreColor)
         this.iluminarColor(nombreColor)
@@ -95,6 +102,8 @@ class Juego{
                 this.ganoElJuego()
             }else{
                 setTimeout(this.siguienteNivel, 1500)
+                score.innerHTML = this.nivel - 1
+                soundLevel.play()
             }
         }
     }
@@ -120,6 +129,7 @@ class Juego{
     }
 
     perdioElJuego(){
+        soundLose.play()
         swal('Simon Dice', 'Ese no era, perdiste :(', 'error')
             .then(() => {
                 this.eliminarEventosClick()
@@ -128,6 +138,8 @@ class Juego{
     }
 
     ganoElJuego(){
+        score.innerHTML = ULTIMO_NIVEL
+        soundWin.play()
         swal('Simon Dice', 'Muy bien, ganaste!!', 'success')
             .then(this.inicializar)
     }
@@ -138,5 +150,6 @@ class Juego{
 btnEmpezar.addEventListener('click', empezarJuego)
 
 function empezarJuego() {
+    score.innerHTML = '0'
     window.juego = new Juego()
 }
