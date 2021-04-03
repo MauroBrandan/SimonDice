@@ -97,7 +97,6 @@ body {
     position: absolute;
     top: 20%;
     right: calc(17% - 150px);
-    padding: 25px;
     font-family: Arial, Helvetica, sans-serif;
     font-size: 1.5rem;
     color: #ecf0f1;
@@ -111,4 +110,31 @@ body {
 
 .score span{
     font-size: 2.5rem;
+}
+
+@media (max-width: 992px){
+    .score{
+        top: 5%;
+        right: 5%;
+    }
+}
+
+@media (max-width: 500px){
+    .score{
+        left: calc(50% - 150px);
+    }
+
+    .gameboard{
+        width: 40vh;
+        min-width: 320px;
+        height: 40vh;
+    }
+
+    .btn-start{
+        width: 250px;
+        height: 60px;
+        top: calc(50% - 30px);
+        left: calc(50% - 125px);
+        font-size: 1.5rem;
+    }
 }
